@@ -37,6 +37,16 @@
               <div class="clearfix"></div>
             </div>
             <form action="{{ route('bulk_sms_send') }}" method="post" class="form-horizontal form-label-left" >
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12">Select Mosque</label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <select id="heard" class="form-control" required="" name="m_id">
+                    @foreach($mosque as $masjid)
+                      <option value="{{ $masjid->id }}">{{ $masjid->name }}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
               <input type="hidden" name="_token" value="{{ csrf_token() }}">
               <div class="form-group">
               <textarea rows="14" class="col-md-12" name="sms_text" ></textarea>

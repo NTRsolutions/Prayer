@@ -30,7 +30,12 @@ class SmsSendController extends Controller
     }
     public function bulkSms()
     {
-        return view('backend.bulk_sms_template');
+	    if(Auth::user()->type == 'admin'){
+		    $mosque = Mosque::get();
+	    }else{
+		    $mosque = Mosque::where('u_id',Auth::id())->get();
+	    }
+        return view('backend.bulk_sms_template' , compact('mosque'));
     }
     public function eventSMS()
     {
@@ -280,12 +285,12 @@ class SmsSendController extends Controller
 
     public function bulkSmsSending(Request $request)
     {
-        if(Auth::user()->type == 'admin'){
-            $user = Subscriber::get();
-        }else{
-            $user = Subscriber::where('u_id',Auth::user()->id)->get();
-        }
-
+//        if(Auth::user()->type == 'admin'){
+//            $user = Subscriber::get();
+//        }else{
+//            $user = Subscriber::where('u_id',Auth::user()->id)->get();
+//        }
+	    $user = Subscriber::where('m_id',$request->m_id)->get();
         $AddsTemplate = Advertisement::where('type','=','namaz')->get();
         $totalAddsTemplate = count($AddsTemplate);
         $NumberCount = 0;
@@ -302,7 +307,7 @@ class SmsSendController extends Controller
                 'dst' => $useData->phone, // receiver's phone number with country code
                 'text' => $sms // Your SMS text message
             );
-            $response = $this->plivo->send_message($params);
+           // $response = $this->plivo->send_message($params);
             $NumberCount++;
         endforeach;
 
