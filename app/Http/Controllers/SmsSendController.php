@@ -307,22 +307,17 @@ class SmsSendController extends Controller
                 'dst' => $useData->phone, // receiver's phone number with country code
                 'text' => $sms // Your SMS text message
             );
-           // $response = $this->plivo->send_message($params);
+            $response = $this->plivo->send_message($params);
             $NumberCount++;
         endforeach;
+	    if(Auth::user()->type == 'admin'){
+		    $mosque = Mosque::get();
+	    }else{
+		    $mosque = Mosque::where('u_id',Auth::id())->get();
+	    }
 
-//        $userPhone = '';
-//        foreach ($user as $userData):
-//            $userPhone.=$userData->phone.'<';
-//        endforeach;
-//        $params = array(
-//            'src' => '+15876046444', // Sender's phone number with country code
-//            'dst' => $userPhone, // receiver's phone number with country code
-//            'text' => $request->sms_text // Your SMS text message
-//        );
-//        $response = $this->plivo->send_message($params);
         $request->session()->flash('send', 'SMS Send Successfully Responce True and Queu..!');
-        return view('backend.bulk_sms_template');
+	    return view('backend.bulk_sms_template' , compact('mosque'));
     }
 
 
