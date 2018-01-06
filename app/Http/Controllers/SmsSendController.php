@@ -206,7 +206,7 @@ class SmsSendController extends Controller
                 'dst' => $from_number, // receiver's phone number with country code
                 'text' => $text // Your SMS text message
             );
-            $response = $this->plivo->send_message($params);
+            //$response = $this->plivo->send_message($params);
             exit;
         }
 
