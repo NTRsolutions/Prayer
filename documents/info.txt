@@ -1,0 +1,25 @@
+
+https://ca.ovh.com/auth/?action=disconnect&onsuccess=https%3A%2F%2Fca.ovh.com%2Fmanager%2F%23%2Fconfiguration
+
+Login: ghrehman@gmail.com
+Pass: Moon3204@
+
+ACCESS SETTINGS:
+Your VPS's IPv4 address is: 144.217.243.235
+Your VPS's IPv6 address is: 2607:5300:0201:3100:0000:0000:0000:03ea
+
+Your VPS name is: vps123477.vps.ovh.ca
+
+The following administrator account has been configured on the VPS:
+Username: root
+Password: gA0BoLNd
+
+cd var/www/html/
+config/database.php
+/var/run/mysqld/mysqld.sock
+set this at => 'unix_socket' => env('DB_SOCKET', ''),
+
+CREATE USER 'amir'@'144.217.243.235' IDENTIFIED BY 'pass2word';
+
+GRANT USAGE ON *.* TO 'amir'@'144.217.243.235'  IDENTIFIED BY PASSWORD 'pass2word';
+mysql -u amir -h 144.217.243.235 -p
